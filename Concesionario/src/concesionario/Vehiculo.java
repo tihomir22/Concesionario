@@ -89,9 +89,12 @@ public class Vehiculo implements Serializable {
         salida.writeChars(this.potencia);
         salida.writeChars(this.color);
         char[] letras = this.precio.toString().toCharArray();
+        String resEncriptado = "";
         for (int i = 0; i < letras.length; i++) {
-
+            resEncriptado = resEncriptado + this.listaLetras[Integer.parseInt("" + letras[i])];
         }
+        salida.writeChars(resEncriptado);
+        System.out.println("Escrito con encriptación");
     }
 
     public void readObject(ObjectInputStream entrada) {
