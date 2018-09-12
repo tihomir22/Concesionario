@@ -55,6 +55,8 @@ public class Concesionario {
             opcion = teclado.nextInt();
             switch (opcion) {
                 case 1:
+                    listaVendedores.clear();
+                    listaVehiculos.clear();
                     listaVendedores = rellenarDatosVendedor(listaVendedores);
                     System.out.println(listaVendedores.size());
                     listaVehiculos = rellenarDatosVehiculo(listaVehiculos);
@@ -69,6 +71,7 @@ public class Concesionario {
                         case 1:
                             Vendedor v = null;
                             System.out.println("INTRODUZCA CODIGO DEL VENDEDOR - STRING ");
+                            teclado.nextLine();
                             String cod = teclado.nextLine();
                             System.out.println("INTRODUZCA NOMBRE DEL VENDEDOR - STRING");
                             String nombre = teclado.nextLine();
@@ -100,11 +103,28 @@ public class Concesionario {
                             }
                             break;
                         case 2:
-
+                            Vehiculo ve = null;
+                            System.out.println("Introduzca matricula del vehiculo - String");
+                            teclado.nextLine();
+                            String matricula = teclado.nextLine();
+                            System.out.println("Introduzca marca del vehiculo - String");
+                            String marca = teclado.nextLine();
+                            System.out.println("Introduzca modelo del vehiculo - String");
+                            String modelo = teclado.nextLine();
+                            System.out.println("Introduzca potencia del vehiculo - String");
+                            String potencia = teclado.nextLine();
+                            System.out.println("Introduzca color del vehiculo - String ");
+                            String color = teclado.nextLine();
+                            System.out.println("Introduzca precio del vehiculo - Double");
+                            double precio = teclado.nextDouble();
+                            ve = new Vehiculo(matricula, marca, modelo, potencia, color, precio);
+                            listaVehiculos.add(ve);
                             break;
                         default:
                             break;
                     }
+                    actualizarFicheros(listaVehiculos, listaVendedores);
+                    System.out.println("Actualziado con exito");
                     break;
 
                 case 3:
@@ -139,6 +159,8 @@ public class Concesionario {
                     return listaV;
                 }
             }
+        } else {
+            System.out.println("No hay datos de vendedor que cargar");
         }
         return listaV;
     }
@@ -156,7 +178,24 @@ public class Concesionario {
                     return listaVehiculo;
                 }
             }
+        } else {
+            System.out.println("No hay datos de vehiculo que cargar");
         }
         return listaVehiculo;
+    }
+
+    public static void actualizarFicheros(ArrayList<Vehiculo> listaVehiculos, ArrayList<Vendedor> listaVendedores) throws FileNotFoundException, IOException {
+        ObjectOutputStream salidaVehiculo = new ObjectOutputStream(new FileOutputStream("vehiculos.dat"));
+        ObjectOutputStream salidaVendedor = new ObjectOutputStream(new FileOutputStream("vendedores.dat"));
+
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            salidaVehiculo.writeObject(listaVehiculos.get(i));
+        }
+        salidaVehiculo.close();
+        for (int i = 0; i < listaVendedores.size(); i++) {
+            salidaVendedor.writeObject(listaVendedores.get(i));
+        }
+        salidaVendedor.close();
+
     }
 }

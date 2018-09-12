@@ -5,13 +5,16 @@
  */
 package concesionario;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
  *
  * @author mati
  */
-public class Vehiculo implements Serializable{
+public class Vehiculo implements Serializable {
 
     private String matricula;
     private String marca;
@@ -19,6 +22,7 @@ public class Vehiculo implements Serializable{
     private String potencia;
     private String color;
     private Double precio;
+    private char[] listaLetras = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 
     public Vehiculo(String matricula, String marca, String modelo, String potencia, String color, Double precio) {
         this.matricula = matricula;
@@ -27,6 +31,7 @@ public class Vehiculo implements Serializable{
         this.potencia = potencia;
         this.color = color;
         this.precio = precio;
+
     }
 
     public String getMatricula() {
@@ -75,6 +80,22 @@ public class Vehiculo implements Serializable{
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public void writeObject(ObjectOutputStream salida) throws IOException {
+        salida.writeChars(this.matricula);
+        salida.writeChars(this.marca);
+        salida.writeChars(this.modelo);
+        salida.writeChars(this.potencia);
+        salida.writeChars(this.color);
+        char[] letras = this.precio.toString().toCharArray();
+        for (int i = 0; i < letras.length; i++) {
+
+        }
+    }
+
+    public void readObject(ObjectInputStream entrada) {
+
     }
 
     @Override
